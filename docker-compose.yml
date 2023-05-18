@@ -1,0 +1,46 @@
+version: "3.0"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+          gateway: 172.30.0.1
+
+services:
+  trace_dev:
+    image: "trace:${TAG:-1.0.0}"
+    build:
+      context: ./ 
+      dockerfile: Dockerfile
+    restart: always
+    container_name: "trace_dev"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # 设置容器时区与宿主机保持一致
+      - ../../dt_resource/trace_dev/logs:/usr/src/app/logs
+    ports:
+      - 18075:18072
+    environment:
+      TZ: "Asia/Shanghai"
+      ENV: 'dev'
+    networks:
+      - default
+
+  trace_test:
+    image: "trace:${TAG:-1.0.0}"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    container_name: "trace_test"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # 设置容器时区与宿主机保持一致
+      - ../../dt_resource/trace_test/logs:/usr/src/app/logs
+    ports:
+      - 18077:18072
+    environment:
+      TZ: "Asia/Shanghai"
+      ENV: 'test'
+    networks:
+      - default

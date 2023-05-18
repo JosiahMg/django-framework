@@ -1,0 +1,1 @@
+docker-compose up trace_demo trace_prod -d

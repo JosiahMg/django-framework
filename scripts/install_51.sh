@@ -1,0 +1,1 @@
+docker-compose up trace_dev trace_test trace_alpha trace_qz_test trace_wx_test trace_xc_test -d
