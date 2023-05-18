@@ -3,11 +3,7 @@
 # Date: 2022/11/12 10:36
 # Function:
 import pandas as pd
-
-from app.db_interface.load_data_td import LoadDataFromTD
 from app.db_interface.save_trace_result_td import InsertEnnRatioKjToTd
-from app.trace_source.gas_source_ratio import CalcGasSourceRatio, CalcGasSourceRatioAlg
-from app.trace_source.trace_result_compose import TraceResultCompose
 from common.log_utils import get_logger
 from database.operate_tdengine import OperateTD
 
@@ -28,4 +24,5 @@ class TraceSource:
         ratio_df = pd.DataFrame([])
         kj_df = pd.DataFrame([])
         # Step2: 保存溯源结果到TD库
-        InsertEnnRatioKjToTd(self.td_op).execute(ratio_df, kj_df)
+        # InsertEnnRatioKjToTd(self.td_op).execute(ratio_df, kj_df)
+        logger.info('success')
