@@ -19,7 +19,7 @@ gun_log_dir = os.path.join(current_dir, "logs")
 
 # 设置访问日志和错误信息日志路径
 # accesslog = os.path.join(gun_log_dir, 'gis_gunaccess.log')
-errorlog = os.path.join(gun_log_dir, 'trace_gunerror.log')
+errorlog = os.path.join(gun_log_dir, 'gunicorn.log')
 
 # 设置gunicorn访问日志格式，错误日志无法设置
 access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
