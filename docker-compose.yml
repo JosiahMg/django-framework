@@ -1,12 +1,16 @@
 version: "3.0"
 
 networks:
-  default:
+  default:  # 自定义网络
     driver: bridge
     ipam:
       config:
         - subnet: 172.30.0.0/16
           gateway: 172.30.0.1
+  default2: # 使用外部网络algo-net  true: 如果外部网络不存在则提示错误   false: 外部网络不存在则自动创建名称为algo-net的网络
+    external: true
+    name: algo-net
+
 
 services:
   trace_dev:
@@ -25,7 +29,8 @@ services:
       TZ: "Asia/Shanghai"
       ENV: 'dev'
     networks:
-      - default
+      default:
+        ipv4_address: 172.30.0.10
 
   trace_test:
     image: "trace:${TAG:-1.0.0}"
@@ -43,4 +48,5 @@ services:
       TZ: "Asia/Shanghai"
       ENV: 'test'
     networks:
-      - default
+      default:
+        ipv4_address: 172.30.0.11
