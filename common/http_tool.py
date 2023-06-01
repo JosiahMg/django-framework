@@ -15,8 +15,17 @@ def request_post(url, param):
     try:
         # headers = {"Content-Type": "application/json; charset=utf-8"}
         headers = {'charset': 'utf-8', 'application': 'json'}
-        response = requests.post(url=url, data=param, headers=headers)
+        response = requests.post(url=url, json=param, headers=headers)
         return response.json()
     except Exception as e:
         logger.error(f"connect url: {url} failed: {e}")
         raise ConnectionError(f"connect url: {url} failed: {e}")
+
+
+def request_get(url, param, **headers):
+    try:
+        response = requests.get(url, params=param, headers=headers)
+        return response.json()
+    except Exception as e:
+        logger.error(e)
+        return {}
