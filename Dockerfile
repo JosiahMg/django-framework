@@ -3,7 +3,7 @@ FROM python:3.9
 # 使用root用户
 #USER root
 ## 设置为国内apt源
-RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list
+RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list.d/debian.sources
 # 更新apt
 RUN apt-get update && \
     apt-get install -y vim --no-install-recommends && \

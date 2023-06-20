@@ -29,8 +29,7 @@ services:
       TZ: "Asia/Shanghai"
       ENV: 'dev'
     networks:
-      default:
-        ipv4_address: 172.30.0.10
+      - default
 
   trace_test:
     image: "trace:${TAG:-1.0.0}"
@@ -48,5 +47,5 @@ services:
       TZ: "Asia/Shanghai"
       ENV: 'test'
     networks:
-      default:
+      default2:
         ipv4_address: 172.30.0.11
