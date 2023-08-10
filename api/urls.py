@@ -5,7 +5,7 @@
 from django.http import HttpResponse
 from django.urls import path
 
-from api.views import trace_source
+from api.views import module_function
 
 
 def index(request):
@@ -14,5 +14,5 @@ def index(request):
 
 urlpatterns = [
     path('', index, name='index'),
-    path('trace-source', trace_source.trace_source),
+    path('trace-source', module_function.module_function),
 ]

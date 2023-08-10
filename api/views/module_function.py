@@ -16,6 +16,16 @@ from api.service.service_trace_source import ServiceSourceTrace
 logger = get_logger(__name__)
 
 
+@csrf_exempt
+def module_function(request):
+    """ 从前推送同济计算使用的边界值 """
+    context = INIT_STATUS.copy()
+    if request.method == 'POST':
+        return post_method_proc(request, context)
+    else:
+        return other_method_proc(request, context)
+
+
 def post_method_proc(request, context):
     try:
         logger.debug('receive trace source post method request')
@@ -40,11 +50,3 @@ def other_method_proc(request, context):
                         content_type="application/json; charset=utf-8")
 
 
-@csrf_exempt
-def trace_source(request):
-    """ 从前推送同济计算使用的边界值 """
-    context = INIT_STATUS.copy()
-    if request.method == 'POST':
-        return post_method_proc(request, context)
-    else:
-        return other_method_proc(request, context)
