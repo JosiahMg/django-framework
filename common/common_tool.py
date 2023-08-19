@@ -9,9 +9,8 @@ import time
 import joblib
 import numpy as np
 import pandas as pd
-import shelve
-import networkx as nx
-from datetime import datetime
+from datetime import datetime, timedelta
+import shutil
 from functools import wraps
 
 from conf.path_config import project_dir
@@ -289,18 +288,6 @@ def get_time_diff(df, col_time):
     return df
 
 
-def obj_save(output_dir, file_name, **kwargs):
-    obj_file = shelve.open(os.path.join(output_dir, file_name))
-    for key, value in kwargs.items():
-        obj_file[key] = value
-    obj_file.close()
-
-
-def obj_open(input_dir, file_name):
-    obj_file = shelve.open(os.path.join(input_dir, file_name))
-    return obj_file
-
-
 def progress_print(func_name):
     print(func_name + ' completed!')
 
@@ -316,14 +303,6 @@ def graph_save(graph, save_dir, file_name):
     save_dict = dict(nodes=[[n, graph.nodes[n]] for n in graph.nodes()],
                      edges=[[u, v, graph.edges[(u, v)]] for u, v in graph.edges()])
     save_object_general(save_dict, save_dir, file_name)
-
-
-def open_graph(open_dir, fname):
-    G = nx.Graph()
-    json_file = open_object_general(open_dir, fname)
-    G.add_nodes_from(json_file['nodes'])
-    G.add_edges_from(json_file['edges'])
-    return G
 
 
 def make_dir_if_not_exists(input_dir):
@@ -453,3 +432,24 @@ def max_absolute_error(real_y, pred_y):
         abs_error_list.append(abs_error)
 
     return max(abs_error_list), abs_error_list.index(max(abs_error_list))
+
+
+def remove_old_files(directory, days=14):
+    if not os.path.exists(directory):
+        return
+    # 获取当前日期和时间
+    current_time = datetime.now()
+
+    # 计算删除文件的截止日期
+    cutoff_time = current_time - timedelta(days=days)
+
+    # 遍历指定目录中的文件
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        # 检查文件是否是普通文件并且创建时间早于截止日期
+        if os.path.getctime(file_path) < cutoff_time.timestamp():
+            if os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+            else:
+                os.remove(file_path)
+

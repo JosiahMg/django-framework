@@ -4,7 +4,7 @@
 # Function:  气源追踪
 import os.path
 from datetime import datetime
-from app.trace_source.trace_source import TraceSource
+from app.app_func.app_func import TraceSource
 from common.log_utils import get_logger
 from conf.path_config import data_dir
 
