@@ -9,6 +9,10 @@ RUN apt-get update && \
     apt-get install -y vim --no-install-recommends && \
     rm -rfv /var/lib/apt/lists/*
 
+# 阿里云平台的python3.9.18 该镜像安装了以上vim gcc
+# FROM registry.cn-hangzhou.aliyuncs.com/3040/python:3.9
+
+
 # 在镜像中创建目录，用来存放本机中的django项目
 RUN mkdir /usr/src/app
 # 将本机 . 也就是当前目录下所有文件都拷贝到image文件中指定目录
